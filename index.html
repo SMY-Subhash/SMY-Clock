@@ -43,18 +43,19 @@
         function updateClocks() {
             const timeZones = ['UTC', 'Asia/Kolkata', 'America/Los_Angeles', 'America/Chicago', 'America/New_York', 'America/Denver'];
             const clockNames = ['UTC', 'IST', 'PST', 'CST', 'EST', 'MST'];
-            const clocks = document.querySelectorAll('.clock');
-            const analogClocks = document.querySelectorAll('.analog-clock');
+            const clockContainers = document.querySelectorAll('.clock-container');
 
-            clocks.forEach((clock, index) => {
+            clockContainers.forEach((container, index) => {
                 const timeZone = timeZones[index];
                 const clockName = clockNames[index];
-                const date = new Date().toLocaleString('en-US', { timeZone });
-                clock.innerHTML = `<h2>${clockName}</h2><p>${date}</p>`;
-            });
 
-            analogClocks.forEach((analogClock, index) => {
-                const timeZone = timeZones[index];
+                // Update digital clock
+                const digitalClock = container.querySelector('.clock');
+                const date = new Date().toLocaleString('en-US', { timeZone });
+                digitalClock.innerHTML = `<h2>${clockName}</h2><p>${date}</p>`;
+
+                // Update analog clock
+                const analogClock = container.querySelector('.analog-clock');
                 drawAnalogClock(analogClock, timeZone);
             });
         }
@@ -77,6 +78,18 @@
             ctx.lineWidth = 2;
             ctx.strokeStyle = '#ccc';
             ctx.stroke();
+
+            // Draw hour marks
+            for (let i = 0; i < 4; i++) {
+                const angle = (i * Math.PI) / 2;
+                const x = radius + Math.cos(angle) * (radius - 10);
+                const y = radius + Math.sin(angle) * (radius - 10);
+
+                ctx.beginPath();
+                ctx.arc(x, y, 5, 0, 2 * Math.PI);
+                ctx.fillStyle = '#fff';
+                ctx.fill();
+            }
 
             // Draw hour hand
             ctx.save();
@@ -124,18 +137,18 @@
 </head>
 <body>
     <div class="clock-container">
-        <div class="clock"></div>
         <canvas class="analog-clock" width="200" height="200"></canvas>
+        <div class="clock"></div>
     </div>
 
     <div class="clock-container">
-        <div class="clock"></div>
         <canvas class="analog-clock" width="200" height="200"></canvas>
+        <div class="clock"></div>
     </div>
 
     <div class="clock-container">
-        <div class="clock"></div>
         <canvas class="analog-clock" width="200" height="200"></canvas>
+        <div class="clock"></div>
     </div>
 </body>
 </html>
