@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .clock {
+            width: 200px;
+            padding: 20px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+    </style>
+    <script>
+        function updateClocks() {
+            const timeZones = ['UTC', 'Asia/Kolkata', 'America/Los_Angeles', 'America/Chicago', 'America/New_York', 'America/Denver'];
+            const clocks = document.querySelectorAll('.clock');
+
+            clocks.forEach((clock, index) => {
+                const timeZone = timeZones[index];
+                const date = new Date().toLocaleString('en-US', { timeZone });
+                clock.innerHTML = `<h2>${timeZone}</h2><p>${date}</p>`;
+            });
+        }
+
+        // Update clocks every second
+        setInterval(updateClocks, 1000);
+
+        // Initial update
+        updateClocks();
+    </script>
+</head>
+<body>
+    <div class="clock"></div>
+    <div class="clock"></div>
+    <div class="clock"></div>
+    <div class="clock"></div>
+    <div class="clock"></div>
+    <div class="clock"></div>
+</body>
+</html>
