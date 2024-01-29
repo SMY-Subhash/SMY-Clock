@@ -51,7 +51,17 @@
 
                 // Update digital clock
                 const digitalClock = container.querySelector('.clock');
-                const date = new Date().toLocaleString('en-US', { timeZone });
+                const options = {
+                    timeZone: timeZone,
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    weekday: 'short',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric'
+                };
+                const date = new Date().toLocaleString('en-US', options);
                 digitalClock.innerHTML = `<h2>${clockName}</h2><p>${date}</p>`;
 
                 // Update analog clock
@@ -80,15 +90,20 @@
             ctx.stroke();
 
             // Draw hour marks
-            for (let i = 0; i < 4; i++) {
-                const angle = (i * Math.PI) / 2;
-                const x = radius + Math.cos(angle) * (radius - 10);
-                const y = radius + Math.sin(angle) * (radius - 10);
+            for (let i = 0; i < 12; i++) {
+                const angle = (i * Math.PI) / 6;
+                const x = radius + Math.cos(angle) * (radius - 15);
+                const y = radius + Math.sin(angle) * (radius - 15);
 
                 ctx.beginPath();
                 ctx.arc(x, y, 5, 0, 2 * Math.PI);
                 ctx.fillStyle = '#fff';
                 ctx.fill();
+                ctx.fillStyle = '#000';
+                ctx.font = '10px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText((i + 1).toString(), x, y);
             }
 
             // Draw hour hand
